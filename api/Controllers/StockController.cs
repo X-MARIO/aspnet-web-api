@@ -1,4 +1,5 @@
 ﻿using api.Data;
+using api.Dtos.Stock;
 using api.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,7 @@ namespace api.Controllers;
 public class StockController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    
+
     public StockController(ApplicationDbContext context)
     {
         _context = context;
@@ -19,7 +20,7 @@ public class StockController : ControllerBase
     {
         var stock = _context.Stocks.ToList()
             .Select(s => s.ToStockDto());
-        
+
         return Ok(stock);
     }
 
@@ -32,7 +33,18 @@ public class StockController : ControllerBase
         {
             return NotFound();
         }
-        
+
         return Ok(stock.ToStockDto());
+    }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] CreateStockRequestDto stockDto)
+    {
+        var stockModel = stockDto.ToStockFromCreateDto();
+
+        _context.Stocks.Add(stockModel);
+        _context.SaveChanges();
+
+        return CreatedAtAction(nameof(GetById), new { id = stockModel.Id }, stockModel.ToStockDto());
     }
 }
