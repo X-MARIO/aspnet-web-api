@@ -20,16 +20,16 @@ public static class StockMappers
         };
     }
 
-    public static Stock ToStockFromCreateDto(this CreateStockRequestDto createStockRequestDto)
+    public static Stock ToStockFromCreateDto(this CreateStockDto createStockDto)
     {
         return new Stock
         {
-            Symbol = createStockRequestDto.Symbol,
-            CompanyName = createStockRequestDto.CompanyName,
-            Purchase = createStockRequestDto.Purchase,
-            LastDiv = createStockRequestDto.LastDiv,
-            Industry = createStockRequestDto.Industry,
-            MarketCap = createStockRequestDto.MarketCap,
+            Symbol = createStockDto.Symbol,
+            CompanyName = createStockDto.CompanyName,
+            Purchase = createStockDto.Purchase,
+            LastDiv = createStockDto.LastDiv,
+            Industry = createStockDto.Industry,
+            MarketCap = createStockDto.MarketCap,
         };
     }
 }
